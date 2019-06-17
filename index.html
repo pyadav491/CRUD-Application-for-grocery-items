@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Grocery Items</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="scripts/app.js"></script>
+  </head>
+  <body ng-app="mainApp">
+    <div ng-controller="CrudController" class="container">
+      <ul class="list-group">
+      <li class="list-group-item" ng-repeat="filter in filters">
+        <button ng-repeat="(key,val) in filter" ng-click="setFilterByCategory(val)">{{val}}</button>
+      </li>
+    </ul>
+      <input type="text" class="form-control search-input" placeholder="Search Category" ng-model="search.category">
+      <h2>Manage Grocery</h2>
+      <h4 class="float-right"><a href="#" ng-click="showAdd()">Add Grocery</a></h4>
+      <form ng-show="add==true">
+        <h2>Add Grocery</h2>
+        <div class="form-group row">
+          <label class="col-form-label col-sm-2" for="category">Category:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" placeholder="Enter Category" name="category" ng-model="newGrocery.category">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-sm-2" for="name">Name:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" placeholder="Enter Name" name="name" ng-model="newGrocery.name">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-sm-2" for="price">Price:</label>
+          <div class="col-sm-4">
+            <input type="number" class="form-control" min="1" placeholder="Enter Price" name="price" ng-model="newGrocery.price">
+          </div>
+        </div>
+          <input type="hidden" ng-model="newGrocery.Id" />
+        <input type="button" ng-show="addBtn==true" ng-click="addItem()" value="Add">
+        <input type="button" ng-show="update==true" ng-click="updateItem()" value="Update">
+      </form>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="grocery in groceryItems | filter:filterByCategory | filter:search ">
+            <td>{{$index + 1}}</td>
+            <td>{{grocery.category}}</td>
+            <td>{{grocery.name}}</td>
+            <td>{{grocery.price | currency:"$"}}</td>
+            <td><input type="button" value="Delete" ng-click="deleteItem($index)">
+                <input type="button" value="Edit" ng-click="editItem(grocery)"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

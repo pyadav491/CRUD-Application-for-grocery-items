@@ -1,0 +1,15 @@
+a {
+  color: #000;
+}
+h2, h4{
+  display: inline-block;
+  margin:30px 0;
+}
+form, .search-input{
+  margin: 30px 0;
+}
+.list-group,
+.list-group-item{
+  display: inline-block;
+  border:0;
+}
